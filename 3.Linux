@@ -1,0 +1,28 @@
+1.有没有使用过linux？你都用他干什么？
+    Linux是一个长时间运行比较稳定的操作系统，所以我们一般会拿他作为服务器
+    Linux本身具有C的编译环境：有些软件没有软件包，需要在linux上编译得到软件包，如redis，nginx等
+2.说一下Linux常用的命令
+    pwd   cd   su   ls   
+    mkdir   touch   chmod   mv   rm   cp
+    cat   head   tail   more   
+3.远程连接：Linux服务器的
+面试回答：
+  使用Xshell，putty等ssh客户端来连接服务器
+  使用xftp，winscp等sftp客户端来上传和下载文件。
+  连接/上传/下载文件，服务器必须启动ssh和sftp服务。
+企业中常用的两种组合：
+      putty+winscp
+      Xshell+xftp
+4.远程控制：TeamViewer
+5.有没有使用过云主机？
+没有使用过，但是有所了解。
+    云主机就是一些云服务运行商（阿里/华为/新浪等）提供的远程的服务器功能，
+我们开发者或者企业只需要按需付费就可以租用对应的服务器
+    使用ssh和sftp
+
+
+
+
+
+    
+    
