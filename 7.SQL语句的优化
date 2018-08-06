@@ -1,0 +1,41 @@
+ DDL优化：这个操作主要针对有数据库的表，追加数据
+   1.通过禁用索引来提供导入数据性能。
+     //去除键
+     alter table test3 DISABLE keys;
+     //批量插入数据
+     insert into test3 select * from test;
+     //恢复键
+     alter table test3 ENALBE keys;
+   2.关闭唯一校验
+     set unique_checks=0  关闭
+     set unique_checks=1  开启
+   3.修改数据库提交方式
+     set autocommit=0 关闭
+     set autocommit=1 开启
+DML优化：变多次提交为一条
+    insert into test values(1,2)
+    insert into test values(1,3)
+    insert into test values(1,4)
+    //合并多条为一条
+    insert into test values(1,2),(1,3),(1,4)
+DQL优化
+    Order by优化
+      1.多用索引排序
+      2.非索引排序
+    group by优化
+      使用group by null,取消默认排序
+    子查询优化
+      在客户列表找到不在支付列表的客户，查询没买过东西的客户
+      select * from customer where customer_id not in (select DISTINCT customer_id from payment); //子查询
+      select * from customer c left join payment p on(c.cunstomer_id=p.customer_id) where p.customer_id is null
+    Or优化
+      在两个独立索引上使用or的性能优于
+        1.or两边都是索引字段做判断，性能好
+        2.or两边，有一边不用，性能差
+    limit优化
+      select film_id,description from film a inner join (select film_id from film order by title limit 50,5)b on a.film_id=b.film_id
+
+
+
+
+
