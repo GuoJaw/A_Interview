@@ -1,0 +1,46 @@
+1.索引的分类
+    普通索引：允许出现重复的值
+    唯一索引：除了不能有重复的记录外，其他与普通索引一样（用户名，身份证号码，用户的e-mail）
+    主键索引：是随着设定主键而创建的，数据库把主键列设为主键索引（唯一且没有NULL值）
+    全文索引：用来对表中的文本域(char,varchar,test)进行索引，全文索引你针对mylsam
+        explain select * from articles where match(title,body) against('database')会使用全文索引
+2.什么情况下使用索引？
+[1]索引：
+    占用磁盘空间
+    对DML(插入/修改/删除)操作有影响
+[2]使用场景：满足以下条件的字段，才应该创建索引：
+      a.在where条件经常使用（经常查询）
+      b.该字段的内容不是唯一的几个值
+      c.字段内容的变化不频繁
+[3]创建的索引，什么条件下会被使用？
+{
+  复合索引：最左边的列
+  like 通配符不能在前
+  不能or
+  字符串必须加引号
+  全表扫描是否更快
+}
+      a.对于创建的符合索引，不是使用的第一部分就不会使用索引
+        alter table dept add index my_id(dname,loc);//dname左边的列,loc右边的列
+        explain select * from dept where dname='aaa'\G  //会使用索引
+        explain select * from dept where loc='aaa'\G  //不会使用索引
+      b.对于使用like的查询，查询如果是'%aaa'，不会使用到索引，而'aaa%'会使用到索引
+        explain select * from dept where dname='%aaa'\G  //不会使用索引
+        explain select * from dept where loc='aaa%'\G  //会使用索引
+        总结：前面不能加通配符号
+      c.如果条件中有or，即使有条件带索引也不会使用（换句话说，就是必须要求所有的字段，都必须单独使用时，才能使用索引）
+      d.列类型是字符串，一定要将字符串用引号引用起来，才会使用索引
+      e.如果mysql估计使用全表扫描更快，将不会使用索引
+
+
+
+
+
+
+
+
+
+
+
+      
+    
